@@ -23,7 +23,8 @@ source('Scripts/basicFun.R')
 
 #Opening and checking data---------------------------
 ##!!!soil moistureno tiene distribucion normal por las anomalias
-c1 <- c1 <- read_delim("Data/c1_20220819.csv", 
+
+c1 <- c1 <- read_delim("Data/data_94238921_2022_10_04_1.csv", 
                        ";", escape_double = FALSE, col_names = FALSE, 
                        trim_ws = TRUE)
 colnames(c1) <- c("n", "date_time","time_zone", "T_ground_c1","T_bottom_c1","T_top_c1",
@@ -44,7 +45,7 @@ hist(c1$T_ground_c1)
 hist(c1$soil_moisture_c1)
 summary(c1)
 
-c2 <- read_delim("Data/c2_20220819.csv", 
+c2 <- read_delim("Data/data_94238924_2022_10_04_1.csv", 
                  ";", escape_double = FALSE, col_names = FALSE, 
                  trim_ws = TRUE)
 colnames(c2) <- c("n", "date_time","time_zone", "T_ground_c2","T_bottom_c2","T_top_c2",
@@ -64,7 +65,7 @@ hist(c2$T_ground_c2)
 hist(c2$soil_moisture_c2)
 summary(c2)
 
-otc1 <- read_delim("Data/otc1_20220819.csv", 
+otc1 <- read_delim("Data/data_94238923_2022_10_04_1.csv", 
                    ";", escape_double = FALSE, col_names = FALSE, 
                    trim_ws = TRUE)
 colnames(otc1) <- c("n", "date_time","time_zone", "T_ground_otc1","T_bottom_otc1","T_top_otc1",
@@ -84,7 +85,7 @@ hist(otc1$T_ground_otc1)
 hist(otc1$soil_moisture_otc1)
 summary(otc1)
 
-otc2 <-  read_delim("Data/otc2_20220819.csv", 
+otc2 <-  read_delim("Data/data_94238922_2022_10_04_1.csv", 
                     ";", escape_double = FALSE, col_names = FALSE, 
                     trim_ws = TRUE)
 colnames(otc2) <- c("n", "date_time","time_zone", "T_ground_otc2","T_bottom_otc2","T_top_otc2",
@@ -452,6 +453,11 @@ ggtgrounday <- ggplot(allplots_temp_day, aes(x = datenew)) +
   )
 ggtgrounday
 
+
+######## BOXPLOTS ########
+
+
+
 #Visualización conjunta-------------------------------------------
 
 ggarrange(ggc1, ggotc1, ggc2, ggotc2, 
@@ -513,4 +519,4 @@ df <- data.frame(TTOP, TBOTTOM, TGROUND, SOILMOIST)
 rownames(df) <- c("Control 1", "OTC1", "PLOT 1 diff", "Control 2", "OTC2", "PLOT 2 diff", "All plots diff")
 colnames(df) <- c("Top temperature", "Bottom temperature", "Ground temperature", "Soil moisture")
 
-df %>% write.csv("Results/data.csv")
+df %>% write.csv("Results/data_20221004.csv")

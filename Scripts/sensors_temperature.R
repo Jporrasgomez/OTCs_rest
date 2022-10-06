@@ -117,6 +117,7 @@ otcs <- merge(otc1, otc2, all = TRUE)
 controls <- merge(c1, c2, all = TRUE)
 
 #VISUALIZACIÓN PUNTOS -------------------------------
+#PAra ver entre dos fechas usasr  "2022-07-01" <= datenew & datenew <= "2022-10-01"
 
 #C1
 c1graph <- subset(c1, "2022-07-01" <= datenew)
@@ -138,6 +139,8 @@ ggc1 <- ggplot(c1graph, aes(x = datetimenew)) +
     axis.title.y = element_text(color="#993333", size=12, face="bold"),
     axis.title.y.right = element_text(color = "black", size = 12, face = "bold")
   )
+ggc1
+
     
 #OTC1
 otc1graph <- subset(otc1, "2022-07-01" <= datenew)
@@ -159,6 +162,7 @@ ggotc1 <- ggplot(otc1graph, aes(x = datetimenew)) +
     axis.title.y = element_text(color="#993333", size=12, face="bold"),
     axis.title.y.right = element_text(color = "black", size = 12, face = "bold")
     )
+ggotc1
 
 #C2
 c2graph <- subset(c2, "2022-07-01" <= datenew)
@@ -182,7 +186,7 @@ ggc2 <- ggplot(c2graph, aes(x = datetimenew)) +
   )
 
 #OTC2
-otc2graph <- subset(otc2, "2022-07-01" <= datenew)
+otc2graph <- subset(otc2, "2022-07-01")
 otc2graph$datetimenew <- ymd_hm(otc2graph$date_time)
 
 ggotc2 <- ggplot(otc2graph, aes(x = datetimenew)) + 
@@ -222,19 +226,7 @@ plot1_temp_dif <- summarise(group_by(plot1_temp, hour, min),
                         t_bottom_dif = T_bottom_otc1 - T_bottom_c1, 
                         t_ground_dif = T_ground_otc1 - T_ground_c1)
 
-plot1_temp_day <- summarise(group_by(plot1_temp, datenew),
-                            t_top_mean_c1 = mean(T_top_c1, na.rm = T),
-                            t_top_serr_c1 = s.err(T_top_c1),
-                            t_bottom_mean_c1 = mean(T_bottom_c1, na.rm = T),
-                            t_bottom_serr_c1 = s.err(T_bottom_c1),
-                            t_ground_mean_c1 = mean(T_ground_c1, na.rm = T),
-                            t_ground_serr_c1 = s.err(T_ground_c1),
-                            t_top_mean_otc1 = mean(T_top_otc1, na.rm = T),
-                            t_top_serr_otc1 = s.err(T_top_otc1),
-                            t_bottom_mean_otc1 = mean(T_bottom_otc1, na.rm = T),
-                            t_bottom_serr_otc1 = s.err(T_bottom_otc1),
-                            t_ground_mean_otc1 = mean(T_ground_otc1, na.rm = T),
-                            t_ground_serr_otc1 = s.err(T_ground_otc1))
+
 
 plot1_temp_24h <- summarise(group_by(plot1_temp_dif, hour, min),
                             t_top_dif_mean = mean(t_top_dif, na.rm = T),
@@ -278,6 +270,7 @@ ggplot1_temp <- ggplot(plot1_temp_24h, aes(x = hour)) +
 ggplot1_temp
 
 
+
 #PLOT2--------------------------------------------------------------
 
 plot2 <- plot2 %>% select("T_ground_c2","T_bottom_c2","T_top_c2", "soil_moisture_c2","T_ground_otc2","T_bottom_otc2","T_top_otc2",
@@ -290,19 +283,7 @@ plot2_temp_dif <- summarise(group_by(plot2_temp, hour, min),
                             t_bottom_dif = T_bottom_otc2 - T_bottom_c2, 
                             t_ground_dif = T_ground_otc2 - T_ground_c2)
 
-plot2_temp_day <- summarise(group_by(plot2_temp, datenew),
-                            t_top_mean_c2 = mean(T_top_c2, na.rm = T),
-                            t_top_serr_c2 = s.err(T_top_c2),
-                            t_bottom_mean_c2 = mean(T_bottom_c2, na.rm = T),
-                            t_bottom_serr_c2 = s.err(T_bottom_c2),
-                            t_ground_mean_c2 = mean(T_ground_c2, na.rm = T),
-                            t_ground_serr_c2 = s.err(T_ground_c2),
-                            t_top_mean_otc2 = mean(T_top_otc2, na.rm = T),
-                            t_top_serr_otc2 = s.err(T_top_otc2),
-                            t_bottom_mean_otc2 = mean(T_bottom_otc2, na.rm = T),
-                            t_bottom_serr_otc2 = s.err(T_bottom_otc2),
-                            t_ground_mean_otc2 = mean(T_ground_otc2, na.rm = T),
-                            t_ground_serr_otc2 = s.err(T_ground_otc2))
+
 
 plot2_temp_24h <- summarise(group_by(plot2_temp_dif, hour, min),
                             t_top_dif_mean = mean(t_top_dif, na.rm = T),
@@ -404,6 +385,34 @@ ggallplots_temp
                             
 
 #All plots day
+
+plot1_temp_day <- summarise(group_by(plot1_temp, datenew),
+                            t_top_mean_c1 = mean(T_top_c1, na.rm = T),
+                            t_top_serr_c1 = s.err(T_top_c1),
+                            t_bottom_mean_c1 = mean(T_bottom_c1, na.rm = T),
+                            t_bottom_serr_c1 = s.err(T_bottom_c1),
+                            t_ground_mean_c1 = mean(T_ground_c1, na.rm = T),
+                            t_ground_serr_c1 = s.err(T_ground_c1),
+                            t_top_mean_otc1 = mean(T_top_otc1, na.rm = T),
+                            t_top_serr_otc1 = s.err(T_top_otc1),
+                            t_bottom_mean_otc1 = mean(T_bottom_otc1, na.rm = T),
+                            t_bottom_serr_otc1 = s.err(T_bottom_otc1),
+                            t_ground_mean_otc1 = mean(T_ground_otc1, na.rm = T),
+                            t_ground_serr_otc1 = s.err(T_ground_otc1))
+
+plot2_temp_day <- summarise(group_by(plot2_temp, datenew),
+                            t_top_mean_c2 = mean(T_top_c2, na.rm = T),
+                            t_top_serr_c2 = s.err(T_top_c2),
+                            t_bottom_mean_c2 = mean(T_bottom_c2, na.rm = T),
+                            t_bottom_serr_c2 = s.err(T_bottom_c2),
+                            t_ground_mean_c2 = mean(T_ground_c2, na.rm = T),
+                            t_ground_serr_c2 = s.err(T_ground_c2),
+                            t_top_mean_otc2 = mean(T_top_otc2, na.rm = T),
+                            t_top_serr_otc2 = s.err(T_top_otc2),
+                            t_bottom_mean_otc2 = mean(T_bottom_otc2, na.rm = T),
+                            t_bottom_serr_otc2 = s.err(T_bottom_otc2),
+                            t_ground_mean_otc2 = mean(T_ground_otc2, na.rm = T),
+                            t_ground_serr_otc2 = s.err(T_ground_otc2))
 
 allplots_temp_day <- merge(plot1_temp_day, plot2_temp_day)
 
